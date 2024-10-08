@@ -19,4 +19,5 @@ func main() {
 	}
 
 	log.Print(r.Pipeline)
+	log.Print(rn.Results)
 }
