@@ -1,0 +1,36 @@
+name: "Run Scanner at scale"
+
+# concurrency config
+config:
+  workers: 10
+
+# variables
+variables:
+  - name: username
+    value: dmdhrumilmistry # constant 
+    type: string # bool, int
+
+  - name: test
+    value: true
+    type: bool
+
+  - name: repo
+    value: ./test/repos.txt # list of repo on each line
+    type: string
+
+pipeline:
+  - name: "Run 'whoami'"
+    cmd: "whoami "
+    store: true # store stdout, stderr
+    ignore_failure: true # everything except 0 will be treated as error
+
+  - name: "print repo name"
+    cmd: "echo ${repo}"
+    store: true
+
+  - name: "print stored vars"
+    cmd: "echo '${r.0.stdout} - ${r.1.stdout}'" # access result from previous pipeline stages
+
+    
+      
+
