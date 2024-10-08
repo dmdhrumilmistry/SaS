@@ -16,7 +16,7 @@ vars:
 
   - name: repo
     value: ./test/repos.txt # list of repo on each line
-    type: string
+    type: file
 
 pipeline:
   - name: "Run 'whoami'"

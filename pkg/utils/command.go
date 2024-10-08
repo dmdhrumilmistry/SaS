@@ -6,7 +6,7 @@ import (
 	"syscall"
 )
 
-// stdout, stderr, exitCode := RunCommand("/bin/sh", "-c", "whoami")
+// stdout, stderr, exitCode, err := RunCommand("/bin/sh", "-c", "whoami")
 func RunCommand(shell, interpretCmdAsString, command string) (string, string, int, error) {
 	if shell == "" {
 		shell = "/bin/sh"
