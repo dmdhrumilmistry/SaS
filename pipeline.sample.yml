@@ -5,7 +5,7 @@ config:
   workers: 10
 
 # variables
-variables:
+vars:
   - name: username
     value: dmdhrumilmistry # constant 
     type: string # bool, int
