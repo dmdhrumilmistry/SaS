@@ -7,16 +7,15 @@ config:
 # variables
 vars:
   - name: username
-    value: dmdhrumilmistry # constant 
-    type: string # bool, int
+    value: dmdhrumilmistry
 
   - name: test
-    value: true
-    type: bool
+    value: "true"
 
-  - name: repo
-    value: ./test/repos.txt # list of repo on each line
-    type: file
+file_var:
+  name: repo
+  path: ./test/repos.txt # list of repo on each line
+  separator: "\n"
 
 pipeline:
   - name: "Run 'whoami'"
