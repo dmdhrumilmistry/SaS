@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+
 	_ "github.com/dmdhrumilmistry/sas/pkg/logging"
 	"github.com/dmdhrumilmistry/sas/pkg/reader"
 	"github.com/dmdhrumilmistry/sas/pkg/runner"
@@ -8,7 +10,14 @@ import (
 )
 
 func main() {
-	r := reader.NewReader("pipeline.sample.yml")
+	file := flag.String("f", "", "path to pipeline file")
+	flag.Parse()
+
+	if *file == "" {
+		log.Fatal().Msg("pipeline file path is required. for more info use -h flag")
+	}
+
+	r := reader.NewReader(*file)
 	if err := r.Load(); err != nil {
 		log.Error().Err(err).Msg("failed to load file")
 	}
