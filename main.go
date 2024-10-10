@@ -23,10 +23,7 @@ func main() {
 	}
 
 	rn := runner.NewRunner(r.Pipeline)
-	if err := rn.Run(); err != nil {
-		log.Error().Err(err).Msg("failed to execute pipeline file")
-	}
+	rn.RunWorkers()
 
-	log.Print(r.Pipeline)
 	log.Print(rn.Results)
 }
