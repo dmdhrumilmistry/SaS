@@ -15,7 +15,6 @@ type PipelineConfig struct {
 type PipelineVariable struct {
 	Name  string `yaml:"name"`
 	Value string `yaml:"value"`
-	Type  string `yaml:"type"`
 }
 
 type PipelineFileVariable struct {

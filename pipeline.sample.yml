@@ -19,12 +19,12 @@ file_var:
 
 pipeline:
   - name: "Run 'whoami'"
-    cmd: "whoami "
+    cmd: "whoami"
     store: true # store stdout, stderr
     ignore_failure: true # everything except 0 will be treated as error
 
   - name: "print repo name"
-    cmd: "echo ${repo}"
+    cmd: "echo ${username} ${repo}"
     store: true
 
   - name: "print stored vars"

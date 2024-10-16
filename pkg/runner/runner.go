@@ -2,6 +2,7 @@ package runner
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/dmdhrumilmistry/sas/pkg/reader"
@@ -17,7 +18,6 @@ func NewRunner(pipeline reader.Pipeline) *Runner {
 }
 
 func (r *Runner) InitChannels() {
-	log.Print(len(r.Pipeline.FileVariable.Values))
 	r.scanQueue = make(chan string, len(r.Pipeline.FileVariable.Values))
 }
 
@@ -99,12 +99,27 @@ func (r *Runner) runStep(pipelineStep reader.PipelineStep, fileVar string) (Pipe
 
 	log.Info().Msgf("Running Pipeline Step: %s", pipelineStep.Name)
 
-	// TODO: replace pipleline vars with original vars
+	cmd := pipelineStep.Cmd
+
+	// replace file vars with values
 	if fileVar == "" {
 		log.Warn().Msgf("Value of %s is empty", r.Pipeline.FileVariable.Name)
+	} else {
+		cmd = strings.ReplaceAll(cmd, fmt.Sprintf("${%s}", r.Pipeline.FileVariable.Name), fileVar)
 	}
 
-	stdout, stderr, exitCode, err := utils.RunCommand("/bin/bash", "-c", pipelineStep.Cmd)
+	// replace pipeline var with values
+	for _, variable := range r.Pipeline.Vars {
+		if variable.Value == "" {
+			log.Warn().Msgf("Value of %s is empty", r.Pipeline.FileVariable.Name)
+		} else {
+			cmd = strings.ReplaceAll(cmd, fmt.Sprintf("${%s}", variable.Name), variable.Value)
+		}
+
+	}
+
+	log.Debug().Msg(cmd)
+	stdout, stderr, exitCode, err := utils.RunCommand("/bin/bash", "-c", cmd)
 	if err != nil {
 		log.Error().Err(err).Msgf("failed to execute step: %s", pipelineStep.Name)
 		return pipelineResult, err
