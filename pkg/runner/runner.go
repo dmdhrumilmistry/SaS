@@ -118,7 +118,6 @@ func (r *Runner) runStep(pipelineStep reader.PipelineStep, fileVar string) (Pipe
 
 	}
 
-	log.Debug().Msg(cmd)
 	stdout, stderr, exitCode, err := utils.RunCommand("/bin/bash", "-c", cmd)
 	if err != nil {
 		log.Error().Err(err).Msgf("failed to execute step: %s", pipelineStep.Name)

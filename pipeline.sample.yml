@@ -26,10 +26,3 @@ pipeline:
   - name: "print repo name"
     cmd: "echo ${username} ${repo}"
     store: true
-
-  - name: "print stored vars"
-    cmd: "echo '${r.0.stdout} - ${r.1.stdout}'" # access result from previous pipeline stages
-
-    
-      
-
